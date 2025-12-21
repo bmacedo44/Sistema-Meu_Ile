@@ -1,3 +1,7 @@
+puts "HELLO WORLD!"
+sleep 2
+system "clear"
+
 usuario_atual = {}
 
 puts "Exercício prático #001 - Ruby - Meu Ilé:"
@@ -33,7 +37,7 @@ loop do
     if user_pwd_confirm == usuario_atual[:user_password]
         puts "A senha confere!"
         sleep 4
-    break
+        break
     else 
         puts "ERRO - As senhas não batem! Gentileza corrigir."
     end
