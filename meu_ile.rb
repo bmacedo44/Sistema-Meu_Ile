@@ -15,7 +15,7 @@ system "clear"
 
 puts "Você já possui cadastro no sistema?"
 puts "Digite (S) caso possua ou (N) caso não possua:"
-possui_cadastro = gets.chomp  
+possui_cadastro = gets.chomp.upcase  
 
 if possui_cadastro == "N"
 
@@ -27,21 +27,31 @@ if possui_cadastro == "N"
     puts "Insira sua senha: (Sua senha deverá conter de 6 a 10 caracteres entre letras, números e caracteres especiais)"
     usuario_atual[:user_password] = gets.chomp
 
+loop do 
     puts "Confirme sua senha:"
     user_pwd_confirm = gets.chomp
-        if user_pwd_confirm != usuario_atual[:user_password]
-            puts "ERRO - As senhas não batem! Gentileza corrigir."
-            sleep 4
-        end
+    if user_pwd_confirm == usuario_atual[:user_password]
+        puts "A senha confere!"
+        sleep 4
+    break
+    else 
+        puts "ERRO - As senhas não batem! Gentileza corrigir."
+    end
+end
     puts "Insira seu endereço de e-mail:"
     usuario_atual[:user_email] = gets.chomp
 
-    puts "Confirme seu endereço de e=mail:"
-    user_email_confirmation = gets.chomp
-        if user_email_confirmation != usuario_atual[:user_email]
-            puts "ERRO - Endereço de e-mail não confere, gentileza corrigir"
+    loop do 
+        puts "Confirme seu endereço de e=mail:"
+        user_email_confirmation = gets.chomp
+        if user_email_confirmation == usuario_atual[:user_email]
+            puts "Endereço de e-mail confere"
             sleep 4
+        break
+        else
+            puts "ERRO - Endereço de e-mail não confere, gentileza corrigir"
         end
+    end
 
     puts "Por favor, insira o nome do seu Ilé Asè:"
     usuario_atual[:nome_casa] = gets.chomp  
@@ -65,7 +75,7 @@ if possui_cadastro == "N"
     puts "Agora é a hora que o filho da casa até treme nas bases!"
     puts "Qual o valor da mensalidade cobrado atualmente?"
     print "R$ " 
-    usuario_atual[:valor_mensalidade] = gets.chomp.to_f
+    usuario_atual[:valor_mensalidade] = gets.chomp.gsub(",", ".").to_f
 
     puts "Muito bom! Eu acho R$ #{usuario_atual[:valor_mensalidade]} bem razoável!"
     system "clear"
