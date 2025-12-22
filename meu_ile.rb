@@ -1,9 +1,14 @@
-puts "HELLO WORLD!"
-sleep 2
+require 'json'
+
+if File.exist?("data_base.json")
+    usuario_atual = JSON.parse(File.read("data_base.json"), symbolize_names: true)
+    puts ">> SEJA VEM VINDO(A) <<"
+    sleep 2
+else
+    usuario_atual = {}
+end
+
 system "clear"
-
-usuario_atual = {}
-
 puts "Exercício prático #001 - Ruby - Meu Ilé:"
 puts "____________________________________________________________"
 puts "Olá!"
@@ -102,6 +107,16 @@ end
     sleep 3
     system "clear"
 
+    puts "Salvando os dados no sistema - Por favor aguarde..."
+sleep 4
+system "clear"
+dados_armazenados = JSON.pretty_generate(usuario_atual)
+File.open("data_base.json", "w") do |archive|
+    archive.write(dados_armazenados)
+end
+
+puts "Cadastro salvo com sucesso!"
+
     puts "A casa #{usuario_atual[:nome_casa]} é comandada por #{usuario_atual[:nome_priest]} e toca #{usuario_atual[:nome_religiao]}"
     puts "A casa #{usuario_atual[:nome_casa]} possui #{Time.now.year - usuario_atual[:data_fundacao]} anos e conta com #{usuario_atual[:integrantes_ativos]} integrantes ativos!"
     puts "Hoje é cobrado o valor simbólico de R$ #{usuario_atual[:valor_mensalidade]} para auxiliar na manutenção e pagamento das contas básicas da casa."
@@ -111,8 +126,25 @@ end
 if possui_cadastro == "S"
     puts "Por gentileza, insira aqui seu nome de usuário:"
     autentication_user_name = gets.chomp
-    if autentication_user_name != usuario_atual[:user_name]
-        puts "ERRO - O usuário digitado não está cadastrado!"
+    if autentication_user_name == usuario_atual[:user_name]
+        puts "Olá #{usuario_atual[:user_name]} !"
         sleep 4
+        puts "Por favor, confirme sua senha de acesso:"
+        loop do 
+        user_pwd_confirm = gets.chomp
+        if user_pwd_confirm == usuario_atual[:user_password]
+            puts "A senha confere!"
+            sleep 4
+            puts "Dados cadastrais de #{usuario_atual[:user_name]} :"
+            puts "#{usuario_atual}"
+        break
+        else 
+        puts "ERRO - As senhas não batem! Gentileza corrigir."
+        end
+end
+    else
+        puts "ERRO - Nome de usuário não cadastrado!"
     end
 end  
+
+
